@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Icons 
 import { IoIosStar } from "react-icons/io";
@@ -25,15 +25,24 @@ import Reviews from '../components/dynamic-contents/Reviews'
 
 const Home = () => {
 
+    const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 425);
+
     const [activeTabButton, setActiveTabButton] = useState('description')
 
     const starIcon = Array(5).fill(null);
 
+    useEffect(() => {
+        const handleResize = () => setIsWideScreen(window.innerWidth >= 425);
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+
     const buttons = [
-        { title: 'Add Review', icon: <MdEdit className='text-yellow-400 h-5 w-5 mr-2' />, Color: 'border-yellow-400 text-yellow-500' },
-        { title: 'Direction', icon: <MdOutlineDirections className='text-pink-400 h-5 w-5 mr-2' />, },
-        { title: 'Save', icon: <BsBookmarkCheck className='text-pink-400 h-5 w-5 mr-2' />, Bold: 'font-semibold' },
-        { title: 'Share', icon: <FaRegShareFromSquare className='text-pink-400 h-5 w-5 mr-2' />, },
+        { title: 'Add Review', icon: <MdEdit className='text-yellow-400 h-5 w-5' />, Color: 'border-yellow-400 text-yellow-500' },
+        { title: 'Direction', icon: <MdOutlineDirections className='text-pink-400 h-5 w-5' />, },
+        { title: 'Save', icon: <BsBookmarkCheck className='text-pink-400 h-5 w-5' />, Bold: 'font-semibold' },
+        { title: 'Share', icon: <FaRegShareFromSquare className='text-pink-400 h-5 w-5' />, },
     ]
 
     const roundedImages = [
@@ -44,10 +53,10 @@ const Home = () => {
     ]
 
     const tabButtons = [
-        { id: 'description', component: <Description />, title: 'Description', marginX: 'mr-2', paddingX: 'pr-2' },
-        { id: 'photos', component: <Photos />, title: 'Photos', marginX: 'mx-2', paddingX: 'px-2' },
-        { id: 'videos', component: <Videos />, title: 'Videos', marginX: 'mx-2', paddingX: 'px-2' },
-        { id: 'reviews', component: <Reviews />, title: 'Reviews', marginX: 'mx-2', paddingX: 'px-2' },
+        { id: 'description', component: <Description />, title: 'Description', marginX: 'mr-2', paddingX: 'pr-1 min-[425px]:pr-2' },
+        { id: 'photos', component: <Photos />, title: 'Photos', marginX: 'mx-2', paddingX: 'px-1 min-[425px]:px-2' },
+        { id: 'videos', component: <Videos />, title: 'Videos', marginX: 'mx-2', paddingX: 'px-1 min-[425px]:px-2' },
+        { id: 'reviews', component: <Reviews />, title: 'Reviews', marginX: 'mx-2', paddingX: 'px-1 min-[425px]:px-2' },
     ]
 
     return (
@@ -79,16 +88,16 @@ const Home = () => {
             </div>
 
             {/* Main Image Contents */}
-            <div className='flex flex-col items-start lg:flex-row lg:justify-between lg:items-start py-2 lg:py-0'>
+            <div className='flex flex-col items-start sm:flex-row sm:justify-between sm:items-start py-2 sm:py-0'>
                 {/* Left Side */}
                 <div className='flex flex-col justify-center space-y-1.5'>
-                    <h1 className='text-2xl lg:text-4xl font-semibold'>Kokilaben Dhirubhai Ambani Hospital</h1>
+                    <h1 className='text-2xl lg:text-4xl font-semibold text-wrap'>Kokilaben Dhirubhai Ambani Hospital</h1>
                     <p className='text-md lg:text-xl font-medium'>Andheri, Mumbai</p>
                     <p className='text-md lg:text-xl font-medium'>MultiSpeciality hospital <strong>700 Beds</strong></p>
                 </div>
 
                 {/* Right Side  */}
-                <div className='flex flex-col justify-center text-[#74c365] space-y-0.5 lg:space-y-1.5 text-left lg:text-right'>
+                <div className='flex flex-col justify-center text-[#74c365] my-2 sm:my-0 space-y-0.5 sm:space-y-1.5 text-left sm:text-right'>
                     <div className='flex justify-center items-center'>
                         <p className='text-lg font-medium mr-3'>4.8</p>
                         {starIcon.map((_, index) => (
@@ -103,29 +112,31 @@ const Home = () => {
 
             </div>
 
-            {/* Buttons & Rounded Images */}
-            <div className='flex items-center justify-between py-4'>
+        
+
+            {/* Buttons & Rounded Images*/}
+            <div className='flex flex-col sm:flex-row items-start sm:items-center sm:space-y-0 space-y-5 justify-between pb-4 sm:py-4'>
 
                 {/* Left Side for Buttons */}
-                <div className='flex items-center space-x-2'>
+                <div className='flex items-center space-x-2 min-[425px]:space-x-1 md:space-x-2'>
                     {buttons.map((btn, index) => (
                         <button
                             key={index}
-                            className={`flex justify-center items-center border-2 py-2 px-4 rounded ${btn.Color} ${btn.Bold} `}
+                            className={`flex justify-center items-center gap-x-[5px] text-xs sm:text-sm md:text-base border-2 py-2 px-5 min-[425px]:px-2 md:px-4 rounded ${btn.Color} ${btn.Bold} `}
                         >
-                            {btn.icon} {btn.title}
+                            {btn.icon} {isWideScreen && btn.title}
                         </button>
                     ))}
                 </div>
 
                 {/* Right Side for Rounded Images */}
-                <div className='flex space-x-2'>
+                <div className='flex space-x-1.5 md:space-x-2'>
                     {roundedImages.map((item, index) => (
                         <img
                             key={index}
                             src={item.image}
                             alt={item.alt}
-                            className='h-14 w-14 object-cover object-center rounded-full'
+                            className='h-14 w-14 md:h-14 md:w-14 object-cover object-center rounded-full'
                         />
                     ))}
                 </div>
@@ -135,14 +146,14 @@ const Home = () => {
 
             {/* Dynamic Section */}
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col py-2 md:py-0.5'>
                 {/* For Tab Buttons */}
                 <div className='flex items-center justify-start border-b-2'>
                     {tabButtons.map((btn) => (
                         <button
                             key={btn.id}
                             onClick={() => setActiveTabButton(btn.id)}
-                            className={` ${btn.marginX} ${btn.paddingX} pt-1 pb-3 text-lg font-semibold transition-all duration-150 ease-in-out ${activeTabButton === btn.id ? 'text-gray-900 border-b-[6px] border-gray-700 rounded-sm' : 'border-b-[6px] border-transparent text-gray-500'} `}
+                            className={` ${btn.marginX} ${btn.paddingX} pt-1 pb-3 text-xs sm:text-base md:text-lg font-semibold transition-all duration-150 ease-in-out ${activeTabButton === btn.id ? 'text-gray-900 border-b-[6px] border-gray-700 rounded-sm' : 'border-b-[6px] border-transparent text-gray-500'} `}
                         >
                             {btn.title}
                         </button>

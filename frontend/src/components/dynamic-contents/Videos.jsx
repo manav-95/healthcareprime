@@ -19,11 +19,11 @@ const Videos = () => {
 
   return (
     <>
-      <div className='grid grid-cols-4 gap-x-2 gap-y-6 py-8'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-2.5 gap-y-6 py-8'>
         {videos.map((video, index) => (
           <div
             key={index}
-            className='flex flex-col bg-gray-100 shadow-md'
+            className='flex flex-col bg-gray-100 hover:bg-gray-50 shadow-md rounded-sm transition-all'
             >
 
             <div className='relative'>
