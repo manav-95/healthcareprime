@@ -7,6 +7,10 @@ import { MdOutlineDirections } from "react-icons/md";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import { BsBookmarkCheck } from "react-icons/bs";
 
+// Tippy React
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+
 // Main Images 
 import Main_Hospital_Image from '../assets/main-images/main-hospital-image.png'
 import Patint_Room from '../assets/main-images/patient-room.jpg'
@@ -120,12 +124,14 @@ const Home = () => {
                 {/* Left Side for Buttons */}
                 <div className='flex items-center space-x-2 min-[425px]:space-x-1 md:space-x-2'>
                     {buttons.map((btn, index) => (
+                          <Tippy key={index} content={btn.title}>
                         <button
                             key={index}
                             className={`flex justify-center items-center gap-x-[5px] text-xs sm:text-sm md:text-base border-2 py-2 px-5 min-[425px]:px-2 md:px-4 rounded ${btn.Color} ${btn.Bold} `}
                         >
                             {btn.icon} {isWideScreen && btn.title}
                         </button>
+                        </Tippy>
                     ))}
                 </div>
 
