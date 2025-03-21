@@ -15,6 +15,7 @@ import 'tippy.js/dist/tippy.css';
 import Main_Hospital_Image from '../assets/main-images/main-hospital-image.png'
 import Patint_Room from '../assets/main-images/patient-room.jpg'
 import Hallway from '../assets/main-images/hallway.jpg'
+import Main_Hospital_Image_2 from '../assets/main-images/main-hospital-image.png'
 
 // Rounded Images
 import First_Logo from '../assets/rounded-images/first-logo.jpg'
@@ -38,9 +39,9 @@ const Home = () => {
     useEffect(() => {
         const handleResize = () => setIsWideScreen(window.innerWidth >= 425);
         window.addEventListener('resize', handleResize);
-    
+
         return () => window.removeEventListener('resize', handleResize);
-      }, []);
+    }, []);
 
     const buttons = [
         { title: 'Add Review', icon: <MdEdit className='text-yellow-400 h-5 w-5' />, Color: 'border-yellow-400 text-yellow-500' },
@@ -63,38 +64,120 @@ const Home = () => {
         { id: 'reviews', component: <Reviews />, title: 'Reviews', marginX: 'mx-2', paddingX: 'px-1 min-[425px]:px-2' },
     ]
 
+
+    const images = [
+        Main_Hospital_Image,
+        Patint_Room,
+        Hallway,
+        Main_Hospital_Image_2,
+        Main_Hospital_Image_2,
+        Main_Hospital_Image_2,
+        Main_Hospital_Image_2,
+
+
+
+
+
+
+    ]
+
     return (
         <div className='max-w-7xl container mx-auto px-4'>
+
+
+
+
             {/*Main Image Gird */}
-            <div className='grid grid-cols-12 gap-2 sm:gap-4 lg:gap-4 py-4'>
+            {/* <div className='grid grid-cols-12 gap-2 sm:gap-4 lg:gap-4 py-4'>
                 <div className='col-span-12 lg:col-span-8'>
                     <img src={Main_Hospital_Image} alt='main hospital' className='h-[240px] min-[425px]:h-[280px] sm:h-[380px] lg:h-[510px] w-full rounded-sm object-cover' />
-                </div>
-                <div className='grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-0 col-span-12 lg:col-span-4 lg:flex lg:flex-col lg:justify-between lg:space-y-4'>
-                    <div>
-                        <img src={Patint_Room} alt='Patient Room' className='h-full w-full object-cover object-center rounded-sm' />
-                    </div>
-                    <div
-                        style={{
-                            backgroundImage: `url(${Hallway})`,
-                        }}
-                        className="relative h-full w-full bg-cover bg-center rounded-sm"
-                    >
-                        <div className="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
-                            <div className="flex flex-col justify-center items-center text-white text-2xl">
-                                <p>+</p>
-                                <p>15 more</p>
+
+                    <div className='grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-0 col-span-12 lg:col-span-4 lg:flex lg:flex-col lg:justify-between lg:space-y-4'>
+                        <div>
+                            <img src={Patint_Room} alt='Patient Room' className='h-full w-full object-cover object-center rounded-sm' />
+                        </div>
+                        <div
+                            style={{
+                                backgroundImage: `url(${Hallway})`,
+                            }}
+                            className="relative h-full w-full bg-cover bg-center rounded-sm"
+                        >
+                            <div className="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+                                <div className="flex flex-col justify-center items-center text-white text-2xl">
+                                    <p>+</p>
+                                    <p>15 more</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+            </div> */}
+
+            {/* New Conditional Rendering Grid */}
+            <div className='grid grid-cols-12 gap-2 sm:gap-4 lg:gap-4 py-4'>
+                {/* Main Image */}
+                <div className={`col-span-12 ${images.length === 1 ? 'lg:col-span-12' : 'lg:col-span-8'}`}>
+                    <img
+                        src={images[0]}
+                        alt='main hospital'
+                        className='h-[240px] min-[425px]:h-[280px] sm:h-[380px] lg:h-[510px] w-full rounded-sm object-cover'
+                    />
+                </div>
+
+                {/* Conditional Grid for Other Images */}
+                {images.length > 1 && (
+                    <div className='grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-0 col-span-12 lg:col-span-4 lg:flex lg:flex-col lg:justify-between lg:space-y-4'>
+                        {/* First Additional Image */}
+                        <div>
+                            <img
+                                src={images[1]}
+                                alt='Patient Room'
+                                className='h-full w-full object-cover object-center rounded-sm'
+                            />
+                        </div>
+
+                        {/* Show the third image only if there are 3 or more images */}
+                        <div className="relative h-full w-full">
+                            {images.length >= 4 ? (
+                                <div
+                                    style={{ backgroundImage: `url(${images[2]})` }}
+                                    className="relative h-full w-full bg-cover bg-center rounded-sm"
+                                >
+                                    <div className="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+                                        <div className="flex flex-col justify-center items-center text-white text-2xl">
+                                            <p>+</p>
+                                            <p>{images.length - 3} more</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    {images.length > 2 && (
+                                        <img
+                                            src={images[2]}
+                                            alt='Hallway'
+                                            className='h-full w-full object-cover object-center rounded-sm'
+                                        />
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                )}
             </div>
 
+
+
+
+
+
+
+
             {/* Main Image Contents */}
-            <div className='flex flex-col items-start sm:flex-row sm:justify-between sm:items-start py-2 sm:py-0'>
+            < div className='flex flex-col items-start sm:flex-row sm:justify-between sm:items-start py-2 sm:py-0' >
                 {/* Left Side */}
-                <div className='flex flex-col justify-center space-y-1.5'>
+                <div div className='flex flex-col justify-center space-y-1.5' >
                     <h1 className='text-2xl lg:text-4xl font-semibold text-wrap'>Kokilaben Dhirubhai Ambani Hospital</h1>
                     <p className='text-md lg:text-xl font-medium'>Andheri, Mumbai</p>
                     <p className='text-md lg:text-xl font-medium'>MultiSpeciality hospital <strong>700 Beds</strong></p>
@@ -116,7 +199,7 @@ const Home = () => {
 
             </div>
 
-        
+
 
             {/* Buttons & Rounded Images*/}
             <div className='flex flex-col sm:flex-row items-start sm:items-center sm:space-y-0 space-y-5 justify-between pb-4 sm:py-4'>
@@ -124,13 +207,13 @@ const Home = () => {
                 {/* Left Side for Buttons */}
                 <div className='flex items-center space-x-2 min-[425px]:space-x-1 md:space-x-2'>
                     {buttons.map((btn, index) => (
-                          <Tippy key={index} content={btn.title}>
-                        <button
-                            key={index}
-                            className={`flex justify-center items-center gap-x-[5px] text-xs sm:text-sm md:text-base border-2 py-2 px-5 min-[425px]:px-2 md:px-4 rounded ${btn.Color} ${btn.Bold} `}
-                        >
-                            {btn.icon} {isWideScreen && btn.title}
-                        </button>
+                        <Tippy key={index} content={btn.title}>
+                            <button
+                                key={index}
+                                className={`flex justify-center items-center gap-x-[5px] text-xs sm:text-sm md:text-base border-2 py-2 px-5 min-[425px]:px-2 md:px-4 rounded ${btn.Color} ${btn.Bold} `}
+                            >
+                                {btn.icon} {isWideScreen && btn.title}
+                            </button>
                         </Tippy>
                     ))}
                 </div>
@@ -176,7 +259,7 @@ const Home = () => {
 
                 </div>
             </div>
-        </div>
+        </div >
 
 
 
